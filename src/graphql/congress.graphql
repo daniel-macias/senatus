@@ -1,0 +1,19 @@
+type Congress {
+  id: ID!
+  name: String!
+  organization: String!
+  description: String
+  members: [Member!]
+  sessions: [Session!]
+}
+
+type Query {
+  getAllCongresses: [Congress!]
+  getCongressById(id: ID!): Congress
+}
+
+type Mutation {
+  createCongress(name: String!, organization: String!, description: String): Congress!
+  updateCongress(id: ID!, name: String, organization: String, description: String): Congress!
+  deleteCongress(id: ID!): Congress!
+}
