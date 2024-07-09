@@ -1,6 +1,5 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
 import { Types } from 'mongoose';
-import { SocialMediaInput } from './socialMedia.input';
 
 @InputType()
 export class CreateMemberInput {
@@ -25,8 +24,6 @@ export class CreateMemberInput {
   @Field({ nullable: true })
   bio?: string;
 
-  @Field(() => [SocialMediaInput], { nullable: true })
-  socialMedia?: SocialMediaInput[];
 }
 
 @InputType()
@@ -52,7 +49,5 @@ export class UpdateMemberInput {
   @Field({ nullable: true })
   bio?: string;
 
-  @Field(() => [SocialMediaInput], { nullable: true })
-  socialMedia?: SocialMediaInput[];
 }
 

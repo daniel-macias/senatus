@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { SocialMedia } from 'src/types/socialMedia.type';
 
 @ObjectType()
 @Schema()
@@ -41,9 +40,6 @@ export class Party extends Document {
   @Prop()
   photoUrl: string;
 
-  @Field(() => [SocialMedia], { nullable: true })
-  @Prop({ type: [{ platform: String, url: String }] })
-  socialMedia: SocialMedia[];
 }
 
 export const PartySchema = SchemaFactory.createForClass(Party);

@@ -1,5 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { SocialMediaInput } from './socialMedia.input';
 
 @InputType()
 export class CreatePartyInput {
@@ -26,9 +25,6 @@ export class CreatePartyInput {
 
   @Field({ nullable: true })
   photoUrl?: string;
-
-  @Field(() => [SocialMediaInput], { nullable: true })
-  socialMedia?: SocialMediaInput[];
 }
 
 @InputType()
@@ -57,6 +53,4 @@ export class UpdatePartyInput {
   @Field({ nullable: true })
   photoUrl?: string;
 
-  @Field(() => [SocialMediaInput], { nullable: true })
-  socialMedia?: SocialMediaInput[];
 }

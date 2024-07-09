@@ -28,9 +28,6 @@ import { Vote, VoteSchema } from './schemas/vote.schema';
 import { VoteResolver } from './resolvers/vote.resolver';
 import { VoteService } from './services/vote.service';
 
-import { SocialMedia } from './types/socialMedia.type';
-import { SocialMediaInput } from './dto/socialMedia.input';
-
 import * as mongoose from 'mongoose';
 
 @Module({
@@ -58,8 +55,7 @@ import * as mongoose from 'mongoose';
    PartyService, PartyResolver,
    SessionService, SessionResolver,
    PollService, PollResolver,
-   VoteService, VoteResolver,
-   SocialMedia, SocialMediaInput]
+   VoteService, VoteResolver]
    
 })
 export class AppModule {
