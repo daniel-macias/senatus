@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Party } from './party.schema';
 
 @ObjectType()
 @Schema()
@@ -12,9 +13,8 @@ export class Member extends Document {
   @Prop({ required: true })
   name: string;
 
-  @Field(() => ID, { nullable: true })
-  @Prop({ type: Types.ObjectId, ref: 'Party' })
-  party: Types.ObjectId;
+  @Field(() => Party, { nullable: true })
+  party: Party;
 
   @Field()
   @Prop({ required: true })

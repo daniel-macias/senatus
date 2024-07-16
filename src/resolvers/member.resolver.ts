@@ -12,6 +12,11 @@ export class MemberResolver {
     return this.memberService.findAll();
   }
 
+  @Query(() => [Member])
+  async getAllMembersWithParty(): Promise<any[]> {
+    return this.memberService.findAllWithParty();
+  }
+
   @Query(() => Member)
   async getMemberById(@Args('id', { type: () => ID }) id: string): Promise<Member> {
     return this.memberService.findById(id);

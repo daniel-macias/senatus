@@ -20,6 +20,42 @@ export class MemberService {
     return member;
   }
 
+  async findAllWithParty(): Promise<any[]> {
+    return this.memberModel.aggregate([
+      {
+        $lookup: {
+          from: 'parties',
+          localField: 'party',
+          foreignField: '_id',
+          as: 'partyDetails',
+        },
+      },
+      {
+        $unwind: '$partyDetails',
+      },
+      {
+        $project: {
+          name: 1,
+          party: {
+            _id: '$partyDetails._id',
+            name: '$partyDetails.name',
+            ideology: '$partyDetails.ideology',
+            color: '$partyDetails.color',
+            leader: '$partyDetails.leader',
+            founded: '$partyDetails.founded',
+            headquarters: '$partyDetails.headquarters',
+            website: '$partyDetails.website',
+            photoUrl: '$partyDetails.photoUrl',
+          },
+          position: 1,
+          photoUrl: 1,
+          startDate: 1,
+          endDate: 1,
+          bio: 1,
+        },
+      },
+    ]).exec();
+  }
   async create(input: CreateMemberInput): Promise<Member> {
     const newMember = new this.memberModel({
       ...input,
