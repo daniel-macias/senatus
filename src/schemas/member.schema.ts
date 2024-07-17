@@ -14,6 +14,7 @@ export class Member extends Document {
   name: string;
 
   @Field(() => Party, { nullable: true })
+  @Prop({ type: Types.ObjectId, ref: 'Party' })
   party: Party;
 
   @Field()
