@@ -12,12 +12,51 @@ export class MemberService {
     return this.memberModel.find().exec();
   }
 
-  async findById(id: string): Promise<Member> {
-    const member = await this.memberModel.findById(id).exec();
-    if (!member) {
+  async findById(id: string): Promise<any> {
+    const member = await this.memberModel.aggregate([
+      { $match: { _id: new Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: 'parties',
+          localField: 'party',
+          foreignField: '_id',
+          as: 'partyDetails',
+        },
+      },
+      {
+        $unwind: {
+          path: '$partyDetails',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          party: {
+            _id: '$partyDetails._id',
+            name: '$partyDetails.name',
+            ideology: '$partyDetails.ideology',
+            color: '$partyDetails.color',
+            leader: '$partyDetails.leader',
+            founded: '$partyDetails.founded',
+            headquarters: '$partyDetails.headquarters',
+            website: '$partyDetails.website',
+            photoUrl: '$partyDetails.photoUrl',
+          },
+          position: 1,
+          photoUrl: 1,
+          startDate: 1,
+          endDate: 1,
+          bio: 1,
+        },
+      },
+    ]).exec();
+
+    if (!member || member.length === 0) {
       throw new NotFoundException(`Member with ID ${id} not found`);
     }
-    return member;
+
+    return member[0];
   }
 
   async findAllWithParty(): Promise<any[]> {

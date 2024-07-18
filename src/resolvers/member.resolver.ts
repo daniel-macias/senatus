@@ -18,7 +18,7 @@ export class MemberResolver {
   }
 
   @Query(() => Member)
-  async getMemberById(@Args('id', { type: () => ID }) id: string): Promise<Member> {
+  async getMemberById(@Args('id', { type: () => ID }) id: string): Promise<any> {
     return this.memberService.findById(id);
   }
 
