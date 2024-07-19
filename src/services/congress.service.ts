@@ -13,10 +13,20 @@ export class CongressService {
   }
 
   async findById(id: string): Promise<Congress> {
-    const congress = await this.congressModel.findById(id).exec();
+    const congress = await this.congressModel.findById(id)
+      .populate({
+        path: 'members',
+        populate: {
+          path: 'party',
+          model: 'Party'
+        }
+      })
+      .exec();
+
     if (!congress) {
       throw new NotFoundException(`Congress with ID ${id} not found`);
     }
+
     return congress;
   }
 

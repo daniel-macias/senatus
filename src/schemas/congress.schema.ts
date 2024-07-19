@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Member } from './member.schema';
 
 @Schema()
 @ObjectType()
@@ -21,7 +22,7 @@ export class Congress extends Document {
   description: string;
 
   @Prop({ type: [Types.ObjectId], ref: 'Member' })
-  @Field(() => [ID], { nullable: 'items' })
+  @Field(() => [Member], { nullable: 'items' })
   members: Types.ObjectId[];
 
   @Prop({ type: [Types.ObjectId], ref: 'Session' })

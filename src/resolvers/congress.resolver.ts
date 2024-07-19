@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { CongressService } from '../services/congress.service';
 import { Congress } from '../schemas/congress.schema';
 import { CreateCongressInput, UpdateCongressInput } from '../dto/congress.input';
@@ -10,6 +10,11 @@ export class CongressResolver {
   @Query(() => [Congress])
   async getAllCongresses() {
     return this.congressService.findAll();
+  }
+
+  @Query(() => Congress)
+  async getCongressById(@Args('id', { type: () => ID }) id: string): Promise<Congress> {
+    return this.congressService.findById(id);
   }
 
   @Mutation(() => Congress)
