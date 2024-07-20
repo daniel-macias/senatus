@@ -40,15 +40,22 @@ export class CongressService {
   }
 
   async update(id: string, input: UpdateCongressInput): Promise<Congress> {
+    const updateData: any = { ...input };
+    
+    // Conditionally include members and sessions only if they are provided in the input
+    if (input.memberIds) {
+      updateData.members = input.memberIds.map(id => new Types.ObjectId(id));
+    }
+    if (input.sessionIds) {
+      updateData.sessions = input.sessionIds.map(id => new Types.ObjectId(id));
+    }
+
     const existingCongress = await this.congressModel.findByIdAndUpdate(
       id,
-      {
-        ...input,
-        members: input.memberIds?.map(id => new Types.ObjectId(id)),
-        sessions: input.sessionIds?.map(id => new Types.ObjectId(id)),
-      },
+      updateData,
       { new: true }
     ).exec();
+    
     if (!existingCongress) {
       throw new NotFoundException(`Congress with ID ${id} not found`);
     }
